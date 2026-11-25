@@ -1,0 +1,431 @@
+public class MainActivity extends AppCompatActivity {
+
+    EditText username, password;
+    Button login;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.login);
+
+        login.setOnClickListener(v -> {
+            String u = username.getText().toString();
+            String p = password.getText().toString();
+
+            if (u.isEmpty() || p.isEmpty()) {
+                Toast.makeText(this, "Enter all fields",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else if (u.equals("admin") && p.equals("1234")) {
+                Toast.makeText(this, "Login Successful",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Invalid Credentials",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login" />
+
+</LinearLayout>
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.registration) {
+            Toast.makeText(this, "Registration",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.home) {
+            Toast.makeText(this, "Home",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.about) {
+            Toast.makeText(this, "About",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.exit) {
+            finish();
+        }
+
+        return true;
+    }
+}
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/registration"
+        android:title="Registration"/>
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/about"
+        android:title="About"/>
+
+    <item
+        android:id="@+id/exit"
+        android:title="Exit"/>
+
+</menu>
+
+
+public class RegistrationActivity extends AppCompatActivity {
+
+    EditText name, reg, email, mobile, course;
+    Button submit, reset;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration);
+
+        name = findViewById(R.id.name);
+        reg = findViewById(R.id.reg);
+        email = findViewById(R.id.email);
+        mobile = findViewById(R.id.mobile);
+        course = findViewById(R.id.course);
+
+        submit = findViewById(R.id.submit);
+        reset = findViewById(R.id.reset);
+
+        submit.setOnClickListener(v -> {
+            String n = name.getText().toString();
+            String r = reg.getText().toString();
+            String e = email.getText().toString();
+            String m = mobile.getText().toString();
+            String c = course.getText().toString();
+
+            if (n.isEmpty() || r.isEmpty() || e.isEmpty()
+                    || m.isEmpty() || c.isEmpty()) {
+                Toast.makeText(this, "Fill all fields",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Intent i = new Intent(RegistrationActivity.this,
+                                      DetailsActivity.class);
+
+                i.putExtra("name", n);
+                i.putExtra("reg", r);
+                i.putExtra("email", e);
+                i.putExtra("mobile", m);
+                i.putExtra("course", c);
+
+                startActivity(i);
+            }
+        });
+
+        reset.setOnClickListener(v -> {
+            name.setText("");
+            reg.setText("");
+            email.setText("");
+            mobile.setText("");
+            course.setText("");
+        });
+    }
+}
+
+
+public class DetailsActivity extends AppCompatActivity {
+
+    TextView details;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
+
+        details = findViewById(R.id.details);
+
+        String n = getIntent().getStringExtra("name");
+        String r = getIntent().getStringExtra("reg");
+        String e = getIntent().getStringExtra("email");
+        String m = getIntent().getStringExtra("mobile");
+        String c = getIntent().getStringExtra("course");
+
+        details.setText("Name: " + n +
+                "\nRegister No: " + r +
+                "\nEmail: " + e +
+                "\nMobile: " + m +
+                "\nCourse: " + c);
+    }
+}
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Student Name"/>
+
+    <EditText
+        android:id="@+id/reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Register Number"/>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"/>
+
+    <EditText
+        android:id="@+id/mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mobile Number"
+        android:inputType="phone"/>
+
+    <EditText
+        android:id="@+id/course"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset"/>
+
+</LinearLayout>
+
+
+public class MainActivity extends AppCompatActivity {
+
+    ListView listView;
+
+    String[] languages = {
+        "Java", "Python", "C", "C++", "Kotlin"
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        listView = findViewById(R.id.listView);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+            this,
+            android.R.layout.simple_list_item_1,
+            languages
+        );
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            String selected = languages[position];
+
+            new AlertDialog.Builder(this)
+                .setTitle(selected)
+                .setMessage(selected + " is selected")
+                .setPositiveButton("OK", null)
+                .show();
+        });
+    }
+}
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText n1, n2;
+    TextView result;
+    Button add, sub, mul, div;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        n1 = findViewById(R.id.n1);
+        n2 = findViewById(R.id.n2);
+        result = findViewById(R.id.result);
+
+        add = findViewById(R.id.add);
+        sub = findViewById(R.id.sub);
+        mul = findViewById(R.id.mul);
+        div = findViewById(R.id.div);
+
+        add.setOnClickListener(v -> calculate('+'));
+        sub.setOnClickListener(v -> calculate('-'));
+        mul.setOnClickListener(v -> calculate('*'));
+        div.setOnClickListener(v -> calculate('/'));
+    }
+
+    void calculate(char op) {
+        String a = n1.getText().toString();
+        String b = n2.getText().toString();
+
+        if (a.isEmpty() || b.isEmpty()) {
+            Toast.makeText(this, "Enter both numbers",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double x = Double.parseDouble(a);
+        double y = Double.parseDouble(b);
+        double r = 0;
+
+        switch (op) {
+            case '+': r = x + y; break;
+            case '-': r = x - y; break;
+            case '*': r = x * y; break;
+            case '/':
+                if (y == 0) {
+                    result.setText("Cannot divide by zero");
+                    return;
+                }
+                r = x / y;
+                break;
+        }
+
+        result.setText("Result: " + r);
+    }
+}
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/n1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="First number"
+        android:inputType="numberDecimal|numberSigned" />
+
+    <EditText
+        android:id="@+id/n2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Second number"
+        android:inputType="numberDecimal|numberSigned" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Addition" />
+
+    <Button
+        android:id="@+id/sub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subtraction" />
+
+    <Button
+        android:id="@+id/mul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Multiplication" />
+
+    <Button
+        android:id="@+id/div"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Division" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:textSize="22sp" />
+
+</LinearLayout>
+
+
